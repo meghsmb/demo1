@@ -1,0 +1,24 @@
+pipeline{
+    agent any
+tools {
+  maven '1m'
+}
+stages {
+    stage('clone'){
+        steps{
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/meghsmb/demo1.git']])
+        }
+        
+    }
+  stage('build') {
+    steps {
+      sh 'cd meghss && mvn clean install'
+    }
+  }
+stage('test') {
+    steps {
+        sh 'cd meghss && mvn test'
+    }
+}
+  }
+}
